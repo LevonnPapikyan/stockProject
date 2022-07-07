@@ -78,7 +78,8 @@ def train_model():
         train_x, train_y, test_x, test_y = split(df,n_steps,train_Length,label)
 
 
-        #scalling our data
+        #scalling our data 
+        #this reshapeing part is added for to be completly ready for xgb model
         x_train = np.log(train_x).reshape(train_length*n_fetures,n_steps)
         y_train = train_y
         x_test = np.log(test_x).reshape(train_length*n_fetures,n_steps)

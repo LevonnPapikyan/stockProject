@@ -27,7 +27,10 @@ I have trained XGB model by the help of Wandb.ai which is a good platform for vi
 Theese links may be good for to get dive in code better.
 
 Wandb.ai   https://docs.wandb.ai/guides/sweeps
+
 LSTM       https://colah.github.io/posts/2015-08-Understanding-LSTMs/
+
 XGB        https://arxiv.org/pdf/1603.02754.pdf
+
 WAVENET    https://medium.com/analytics-vidhya/
            wavenet-variations-for-financial-time-series-prediction-the-simple-the-directional-relu-and-the-4860d8a97af1

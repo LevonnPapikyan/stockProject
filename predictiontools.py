@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import keras
 
+
 class Prediction:
                                                                                
     """
@@ -27,9 +28,18 @@ class Prediction:
     label_name : str   
         The label which needs to  be predicted
 
-    scale_X : int
+    scale_X : float or int
         The number by which the model have been trained
     
+    scale_Y : float or int 
+    The number by which the model have been trained
+    
+    multiply_log_x : float or int
+    The number by which the model have been trained
+
+    visualize: boolean
+    Whether user wants to see the visualization of prediction or not
+
     validation_length : int
         The number of days you want to predict
     
@@ -89,6 +99,9 @@ class Prediction:
 
     label_name : str
     Name of the label needs to be predicted
+
+    model : keras.engine.sequential.Sequential
+    trained LSTM XGB or WAVENET model
 
 
         """
@@ -184,6 +197,12 @@ class Prediction:
 
    
     def mae_mse_difference(self):
+        
+        """
+        plotting results of your prediction
+        mae mse 
+
+        """
         print("mae prediction ", self.mae(np.array(self.difference_prediction.squeeze()),np.array(self.label[-self.validation_length:])))     
         print('mae base ',self.mae(np.array(self.label[-(self.validation_length + 1):-1]),np.array(self.label[-self.validation_length:])))
         print("mse prediction ", self.mse(np.array(self.difference_prediction.squeeze()),np.array(self.label[-self.validation_length:])))    

@@ -32,5 +32,4 @@ LSTM       https://colah.github.io/posts/2015-08-Understanding-LSTMs/
 
 XGB        https://arxiv.org/pdf/1603.02754.pdf
 
-WAVENET    https://medium.com/analytics-vidhya/
-           wavenet-variations-for-financial-time-series-prediction-the-simple-the-directional-relu-and-the-4860d8a97af1
+WAVENET    https://medium.com/analytics-vidhya/wavenet-variations-for-financial-time-series-prediction-the-simple-the-directional-relu-and-the-4860d8a97af1

@@ -8,14 +8,11 @@ the aim of the project is to get results which will help to do daily stock tradi
 There are many ways to scale your data or to preapre for training. So because the aim was to do daily trading I decided to include 
 "open" value for the prediction of current day. Which helped to have better results compared with a models that I have trained 
 without including "open". I also decided to scale data by counting logarithm of it, or just divide by numbers. I had also tried to do sigma and min-max scalling which results didn't differ much then the mothods written above.
-I used three types of models for prediction. The idea was to get three independent models it was hardly achived and for that I wrote a class which divdes data into different parts. And by the help of that class you can train models in different parts of data. 
-
-I used three types of models for prediction. The idea was to get three independent models it was hardly achived and for that I wrote a class which divdes data into different parts. And by the help of that class you can train models in different parts of data.
-
+I used three types of models for prediction. The idea was to get three independent models, it was hardly achived, and for that I wrote a class which divides data into different parts. And by the help of that class you can train models in different parts of data. 
 
 LSTM
 
-You can try to train your own model. I used the model written in model.py and the help of weights changing depended on the 
+You can try to train your own model. I used the model written in model.py and by the help of weights changing depended on the 
 loss of test data (mse in my case) I continued training. You can also add the range of training models which will help you to 
 get better results.
 

@@ -9,7 +9,7 @@ from keras.models import load_model
 import matplotlib.pyplot as plt
 import numpy as np
 import keras
-
+import xgboost as xgb
 
 class Prediction:
                                                                                
@@ -433,6 +433,91 @@ def plotting_final_high(df,name):
 
 
 
+def data_frame_to_numpy(self,data_frame):
+     len_0 = len(data_frame)
+     raw_data_f =np.array(data_frame)
+     raw_data_f = raw_data_f.reshape(len_0, data_frame.shape[1])
+     
+     return raw_data_f
+ 
+class XgbTrain:
+    """
+    this class is for makeing Xgboost training 
+    methods
+    -------
+    """
+    def __init__(self,train_df,params,label_name,train_length=800):
+        """
+          Constructs all the necessary attributes for the Prediction object.
+    Parameters
+    ----------
+        train_df : pandas DataFrame
+        
+        contains training data
+        params : dict
+        contains the configurations by which model has already been trained
+        """    
+        self.train_df = train_df
+        self.n_steps = int(params["n_steps"])
+        self.params = params
+        self.params.pop("n_steps")
+        self.train_length = train_length
+        self.label_name = label_name
+    
+    def labeling(self, label_name, df):
+    
+        if label_name == 'LOW':
+            
+            df["DIFFERENCE"] = df["OPEN"]-df["LOW"]   #adding new column which is the difference betwheen the OPEN and LOW
+            df["OPEN"] = df["OPEN"].shift(-1)
+            label = df["DIFFERENCE"]
+            df.drop("DIFFERENCE",axis=1,inplace=True)
+            return df, label
+        else:
+            df["DIFFERENCE"] =df["HIGH"] - df["OPEN"]  #adding new column which is the difference betwheen the HIGH and OPEN
+            df["OPEN"] = df["OPEN"].shift(-1)
+            label = df["DIFFERENCE"]
+            df = df.drop("DIFFERENCE",axis=1)
+            return df, label
+        
+    
+    def split(self,data, n_steps, train_Length, label):
+        test_length = 50
+        inputdf = data
+        #making our data to numpy array
+        train_x = data_frame_to_numpy(  inputdf[-(int(n_steps)+train_Length + test_length):-test_length]  )  
+        train_y = (label[-(train_Length + test_length):-test_length]).to_numpy()
+        test_x = data_frame_to_numpy(inputdf[-(test_length + int(n_steps)):])
+        test_y = label[-(test_length):].to_numpy()
+        #makeing our final predictions
+        x_train, y_train, x_test, y_test = [], [], [], []
+        for i in range(train_Length):
+           x_train.append(train_x[i:(int(n_steps) + i)])
+           y_train.append(train_y[i])
+        for i in range(test_length):
+           x_test.append(test_x[i:(int(n_steps) + i)])
+           y_test.append(test_y[i])
+        x_train = np.log(x_train).reshape(train_Length,int(n_steps)*5)
+        y_train = train_y
+        x_test = np.log(x_test).reshape(test_length,int(n_steps)*5)
+        y_test = test_y
+        return np.array(x_train), np.array(y_train), np.array(x_test),np.array(y_test)
+    def train(self, train_x,train_y,params):
+        
+        self.model = xgb.XGBRegressor(objective='reg:squarederror', params = params )
+        self.model.fit(train_x, train_y)
+       
+        return self.model
+    
+    def test(self,x_test,y_test):
+        self.test_prediction = self.model.predict(x_test)
+        return self.test_prediction
+    
+    def get_model(self):
+        self.data,self.label = self.labeling(self.label_name,self.train_df)
+        X,Y,x,y = self.split(self.data,self.n_steps,self.train_length,self.label)
+        model = self.train(X,Y,self.params)
+        return model
            
     
             

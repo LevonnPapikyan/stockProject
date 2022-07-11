@@ -18,7 +18,7 @@ get better results.
 
 XGB
 
-I have trained XGB model by the help of Wandb.ai which is a good platform for visalisation.(You can also use wandb while training LSTM) There is an opportunity to train you model and at the same time do hyperparametr tunning. It helps to get better results. Not only XGB parametrs but also number of steps, train length and other values too you can use in your sweep configuration.
+I have trained XGB model by the help of Wandb.ai which is a good platform for vizualisation.(You can also use wandb while training LSTM) There is an opportunity to train you model and at the same time do hyperparametr tunning. It helps to get better results. Not only XGB parametrs but also number of steps, train length and other values too, you can use in your sweep configuration.
 
 
 Theese links may be good for to get dive in code better.

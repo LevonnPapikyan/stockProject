@@ -2,6 +2,8 @@
 
 this project has been done by Levon Papikyan 
 
+#about trading
+
 Firstly I want to mention that (of course it is my own opinion) the importance of understanding this code is to have a good background of mathematics. it is important to realise what kind of hyperparametrs to choose and so on.
 the aim of the project is to get results which will help to do daily stock trading. I don't suggest to use the code for daily stock trading. 
 

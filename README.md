@@ -2,15 +2,20 @@
 
 this project has been done by Levon Papikyan 
 
-#about trading
+# about trading
 
-Firstly I want to mention that (of course it is my own opinion) the importance of understanding this code is to have a good background of mathematics. it is important to realise what kind of hyperparametrs to choose and so on.
-the aim of the project is to get results which will help to do daily stock trading. I don't suggest to use the code for daily stock trading. 
+Trading is the buying and selling of securities, such as stocks, bonds, currencies and commodities, as opposed to investing, which suggests a buy-and-hold strategy. Trading success depends on a trader's ability to be profitable over time. I tried to use deep laerning and machine learning algorithms to guide traders do their daily investments.
 
-There are many ways to scale your data or to preapre for training. So because the aim was to do daily trading I decided to include 
+# Strategy for preprocessing
+
+Firstly I want to mention that (of course it is my own opinion) the importance of understanding this code is to have a good background of mathematics. it is important to realise what kind of hyperparametrs to choose and so on. code is not recommended to use for trading.
+
+There are many ways to scale your data or to prepare for training. So because the aim was to do daily trading I decided to include 
 "open" value for the prediction of current day. Which helped to have better results compared with a models that I have trained 
 without including "open". I also decided to scale data by counting logarithm of it, or just divide by numbers. I had also tried to do sigma and min-max scalling which results didn't differ much then the mothods written above.
-I used three types of models for prediction. The idea was to get three independent models, it was hardly achived, and for that I wrote a class which divides data into different parts. And by the help of that class you can train models in different parts of data. 
+I used three types of models for prediction. The idea was to get three independent models, and for that I wrote a class which divides data into different parts. And by the help of that class you can train models in different parts of data. 
+
+# models
 
 LSTM
 

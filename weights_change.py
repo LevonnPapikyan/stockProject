@@ -23,6 +23,10 @@ reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.977,
 
 preprocess = {"LABEL" : 1, "DATA" : 'log', "MULT" : 1, "VOL" : 10000}
 
+preprocss = pd.DataFrame(preprocess, index = [name])
+
+preprocess.to_csv("preprocessing_"+name+"_.csv")
+
 preprocess = pd.DataFrame(preprocess, index = [name])
 
 l_r_scheduler = tf.keras.optimizers.schedules.ExponentialDecay(

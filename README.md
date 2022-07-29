@@ -35,10 +35,11 @@ pip install -r requirements.txt  # install
 
  training : in model.py you can change the model artchitachure and run the weights_change.py with the stock name you want and the model will be saved in this folder. 
  
- predictions : if you have trained your wanted stock you need to save the scaling data (how you scaled your data) in csv file then run the pred_with_csv file.
+ predictions : if you have trained your wanted stock you need to save the scaling data (how you scaled your data    "preproccessing" + "_" + model_name + "_" + ".csv"  ) in csv file then run the pred_with_csv file.
 
  pred_with_csv file will give you excel file filled with validation data.
 
+finetunning : in this folder there is a file which helps you to tune your models hyperparamedrs. I also sugesst to add more data for example rub or usd for to have better results.
 
 
 # Theese links may be good for to get dive in code better.

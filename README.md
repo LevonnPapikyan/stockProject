@@ -1,6 +1,6 @@
 # stockProject
 this project has been done by Levon Papikyan 
-![alt text](C:\Users\User\Desktop\me\photo_2022-06-09_15-03-47)
+![](C:\Users\User\Desktop\me\photo_2022-06-09_15-03-47)
 
 # about trading
 

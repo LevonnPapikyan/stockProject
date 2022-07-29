@@ -13,62 +13,58 @@ def add_top_column(df, top_col, inplace=False):
     df.columns = pd.MultiIndex.from_product([[top_col], df.columns])
     return df
 
-    
-stock_names = ["SOL"] #here you can add models names which you have trained
-targets = ['LOW'] #here you can add HIGH
-models = ["LSTM"] #here you can add WAVE XGB
+train_Length = 1000 
+test_length = 20
+n_steps = 15 
+name = "SOL-USD" #here you can add models names which you have trained
+target = 'LOW' #here you can add HIGH
+models = ["LSTM","WAVE"] #here you can add WAVE XGB
 models_folder = "models"
 validation = 20
 
 
 path_excel = "excel.xlsx"
 writer = pd.ExcelWriter(path_excel)
-for name in stock_names:
-    list_for_models = []
-    for j in models:
-        for tar in targets:
-            preprocces = pd.read_csv("preproccessing"+"_"+j+"_"+".csv")
-            preprocces = preprocces.set_index("Unnamed: 0")
+list_for_models = []
+for j in models:
 
-            if j=="LSTM":
+    preprocces = pd.read_csv("preproccessing"+"_"+j+"_"+".csv")
+    preprocces = preprocces.set_index("Unnamed: 0")
 
-                path_model = 'daily_models/'+ name
-                scale_Y = preprocces.loc[name]['LABEL']
-                scale_X = preprocces.loc[name]['DATA']
-                multiply_log_X = preprocces.loc[name]['MULT']
-                VOL = preprocces.loc[name]['VOL']
-                df = pd.read_csv(path_model+".csv")
-                df.DATE = pd.to_datetime(df.DATE.astype(str), format='%Y-%d-%m %H:%M:%S.%f', infer_datetime_format=True)   
-                df = df.set_index("DATE")
-                df['VOL'] = df['VOL']/int(VOL)
-                lstm_model = load_model(os.path.join(models_folder, tar +"_"+ j+"_" + name + ".h5"))
-                csv = Prediction(df,lstm_model,label_name=tar , scale_X=scale_X, validation_length =validation, scale_Y=scale_Y, multiply_log_X=multiply_log_X,visualize=False).to_csv()
-                new_df = add_top_column(csv, tar+" "+j)
-                list_for_models.append(new_df)
+    if j=="LSTM":
+
+        path_model = 'daily_models/'+ name
+        scale_Y = preprocces.loc[name]['LABEL']
+        scale_X = preprocces.loc[name]['DATA']
+        multiply_log_X = preprocces.loc[name]['MULT']
+        VOL = preprocces.loc[name]['VOL']
+        df = pd.read_csv(path_model+".csv")
+        df.DATE = pd.to_datetime(df.DATE.astype(str), format='%Y-%d-%m %H:%M:%S.%f', infer_datetime_format=True)   
+        df = df.set_index("DATE")
+        df['VOL'] = df['VOL']/int(VOL)
+        lstm_model = load_model(os.path.join(models_folder, tar +"_"+ j+"_" + name + ".h5"))
+        csv = Prediction(df,lstm_model,label_name=tar , scale_X=scale_X, 
+        validation_length =validation, scale_Y=scale_Y, multiply_log_X=multiply_log_X,visualize=False).to_csv()
+        new_df = add_top_column(csv, tar+" "+j)
+        list_for_models.append(new_df)
         
     
-            elif j == "WAVE":
-                if name == 'GAZP' and tar =='HIGH':
-                    continue
-                elif name =='MTSS' and tar == 'HIGH':
-                    continue
-                elif name == 'VTBR' and tar == 'HIGH':
-                    continue
-                else:
-                    path_model = 'daily_models/'+ name
-                    scale_Y = preprocces.loc[name]['LABEL']
-                    scale_X = preprocces.loc[name]['DATA']
-                    multiply_log_X = preprocces.loc[name]['MULT']
-                    VOL = preprocces.loc[name]['VOL']
-                    df = pd.read_csv(path_model+".csv")
-                    df.DATE = pd.to_datetime(df.DATE.astype(str), format='%Y-%d-%m %H:%M:%S.%f', infer_datetime_format=True)   
-                    df = df.set_index("DATE")
-                    df['VOL'] = df['VOL']/int(VOL)
-                    lstm_model = load_model(os.path.join(models_folder, tar  +"_"+ j+"_" + name + ".h5"))
-                    csv = Prediction(df,lstm_model,label_name=tar , scale_X=scale_X, validation_length =validation, scale_Y=scale_Y, multiply_log_X=multiply_log_X,visualize=False).to_csv()
-                    new_df = add_top_column(csv, tar+" "+j)
-                    list_for_models.append(new_df)
-                
+    elif j == "WAVE":
+
+        path_model = 'daily_models/'+ name
+        scale_Y = preprocces.loc[name]['LABEL']
+        scale_X = preprocces.loc[name]['DATA']
+        multiply_log_X = preprocces.loc[name]['MULT']
+        VOL = preprocces.loc[name]['VOL']
+        df = pd.read_csv(path_model+".csv")
+        df.DATE = pd.to_datetime(df.DATE.astype(str), format='%Y-%d-%m %H:%M:%S.%f', infer_datetime_format=True)   
+        df = df.set_index("DATE")
+        df['VOL'] = df['VOL']/int(VOL)
+        lstm_model = load_model(os.path.join(models_folder, target +"_"+ j+"_" + name + ".h5"))
+        csv = Prediction(df,lstm_model,label_name=target , scale_X=scale_X, validation_length =validation, scale_Y=scale_Y, multiply_log_X=multiply_log_X,visualize=False).to_csv()
+        new_df = add_top_column(csv,target +" "+j)
+        list_for_models.append(new_df)
+    
 
     if (len(list_for_models)==3):
         df1 = list_for_models[0]

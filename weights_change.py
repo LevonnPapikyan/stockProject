@@ -15,17 +15,15 @@ from model import createModel, LRLogger
 import matplotlib.pyplot as plt
 import yfinance as yf
 from yahoofinancials import YahooFinancials
-from pred_with_csv import stock_names,targets
-
-stock_name = stock_names[0]
-target = targets[0]
-n_steps = 15
-train_Length =200
+from pred_with_csv import train_Length, test_length, n_steps, name, target
 
 
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.977,
                               patience=10, min_lr=0.000001) 
 
+preprocess = {"LABEL" : 1, "DATA" : 'log', "MULT" : 1, "VOL" : 10000}
+
+preprocess = pd.DataFrame(preprocess, index = [name])
 
 l_r_scheduler = tf.keras.optimizers.schedules.ExponentialDecay(
     initial_learning_rate=1e-3,
@@ -33,7 +31,7 @@ l_r_scheduler = tf.keras.optimizers.schedules.ExponentialDecay(
     decay_rate=0.1)
 
 
-project_name = stock_name + " experiments"
+project_name = name + " experiments"
 
 
 daily = yf.download('SOL-USD', 
@@ -48,12 +46,19 @@ datetimear = []
 for i in range(len(df)):
     datetimear.append(df.index[i])
 
+if target == 'HIGH':
 
-df["DIFFERENCE"] = df["High"]-df["Open"]  # this column is going to be our label
-df["Open"]= df["Open"].shift(-1)
-label = df["DIFFERENCE"]
-df.drop("DIFFERENCE",axis=1,inplace=True)
+    df["DIFFERENCE"] = df["High"]-df["Open"]  # this column is going to be our label
+    df["Open"]= df["Open"].shift(-1)
+    label = df["DIFFERENCE"]
+    df.drop("DIFFERENCE",axis=1,inplace=True)
 
+else: 
+
+    df["DIFFERENCE"] = df["Open"]-df["Low"]  # this column is going to be our label
+    df["Open"]= df["Open"].shift(-1)
+    label = df["DIFFERENCE"]
+    df.drop("DIFFERENCE",axis=1,inplace=True)
 
 train_x, train_y, test_x, test_y = split(df,n_steps,train_Length,label)
 
@@ -64,7 +69,7 @@ x_test = np.log(test_x)
 y_test = test_y
 
 
-n_epochs = 5
+n_epochs = 1000
 batch_size = 64
 
 
@@ -134,7 +139,7 @@ plt.plot(zipped_list[2][3], label = "model number:" + str(zipped_list[2][2]))
 plt.title("losses")
 plt.show()
 plt.close()
-model.save(stock_name + "_model_the_BEST"+".h5")
+model.save(name + "_model_the_BEST"+".h5")
 
 
 

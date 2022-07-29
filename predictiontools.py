@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import keras
 import xgboost as xgb
-print(12)
+
 class Prediction:
                                                                                
     """

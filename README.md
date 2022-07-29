@@ -36,10 +36,10 @@ pip install -r requirements.txt  # install
  training : in model.py you can change the model artchitachure and run the weights_change.py with the stock name you want and the model will be saved in this folder. 
  
  predictions : if you have trained your wanted stock you need to save the scaling data (how you scaled your data) in csv file then run the pred_with_csv file.
- 
+
  pred_with_csv file will give you excel file filled with validation data.
 
-Theese links may be good for to get dive in code better.
+<!-- Theese links may be good for to get dive in code better. --> -->
 
 Wandb.ai   https://docs.wandb.ai/guides/sweeps
 

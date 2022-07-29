@@ -39,7 +39,7 @@ pip install -r requirements.txt  # install
 
  pred_with_csv file will give you excel file filled with validation data.
 
-<!-- Theese links may be good for to get dive in code better. --> -->
+# Theese links may be good for to get dive in code better. -->
 
 Wandb.ai   https://docs.wandb.ai/guides/sweeps
 

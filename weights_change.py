@@ -15,9 +15,10 @@ from model import createModel, LRLogger
 import matplotlib.pyplot as plt
 import yfinance as yf
 from yahoofinancials import YahooFinancials
+from pred_with_csv import stock_names,targets
 
-
-stock_name = 'SOL'
+stock_name = stock_names[0]
+target = targets[0]
 n_steps = 15
 train_Length =200
 

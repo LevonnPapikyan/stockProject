@@ -26,7 +26,18 @@ get better results.
 XGB
 
 I have trained XGB model by the help of Wandb.ai which is a good platform for vizualisation.(You can also use wandb while training LSTM) There is an opportunity to train you model and at the same time do hyperparametr tunning. It helps to get better results. Not only XGB parametrs but also number of steps, train length and other values too, you can use in your sweep configuration.
+ 
+# how to run the code
 
+git clone https://github.com/LevonnPapikyan/stockProject  # clone
+
+pip install -r requirements.txt  # install
+
+ training : in model.py you can change the model artchitachure and run the weights_change.py with the stock name you want and the model will be saved in this folder. 
+ 
+ predictions : if you have trained your wanted stock you need to save the scaling data (how you scaled your data) in csv file then run the pred_with_csv file.
+ 
+ pred_with_csv file will give you excel file filled with validation data.
 
 Theese links may be good for to get dive in code better.
 
